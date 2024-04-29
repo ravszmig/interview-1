@@ -1,19 +1,23 @@
 package task2;
 
+import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
 public class IsPossiblePalindrome {
-    
+
     public static boolean check(String input) {
-        throw new IllegalStateException("Implement me!");
+
+        Map<Character, Long> charFreq = input.chars()
+                .mapToObj(c -> (char) c)
+                .collect(groupingBy(Function.identity(), counting()));
+
+        long oddCount = charFreq.values().stream()
+                .filter(c -> c % 2 != 0)
+                .count();
+
+        return oddCount <= 1;
     }
 }
-
-
-// aacbb
-// aabb

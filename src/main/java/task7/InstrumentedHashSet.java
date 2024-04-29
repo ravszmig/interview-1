@@ -17,10 +17,22 @@ public class InstrumentedHashSet<E> extends HashSet<E> {
         return super.add(e);
     }
 
+    // *** THIS METHOD WAS THE PROBLEM
+//    @Override
+//    public boolean addAll(Collection<? extends E> c) {
+//        addCount += c.size();
+//        return super.addAll(c);
+//    }
+
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        addCount += c.size();
-        return super.addAll(c);
+        boolean modified = false;
+        for (E element : c) {
+            if (add(element)) {
+                modified = true;
+            }
+        }
+        return modified;
     }
 
     public int getAddCount() {
